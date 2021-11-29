@@ -89,3 +89,22 @@ h1{
   z-index: -1;
   border-radius: 15px;
 }
+
+/* VP17003 */
+.articulo{
+  display: inline-flex;
+}
+
+.w-60{
+  width: 60%;
+}
+
+.w-40{
+  width: 40%;
+}
+
+.imagen{
+  width: 80%;
+  display: block;
+  margin: 70px auto;
+}
