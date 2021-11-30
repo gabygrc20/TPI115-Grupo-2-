@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintaxis y Semántica</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+    <div style="border-style: groove; border-color: black;background-color: #7AEA95;">
+        <h1 style="text-align: center; margin-left: 4%;">Sintaxis y semántica</h1>
+        <table>
+          <tr>
+			<td style="width: 60%">
+		<p><b>Ejemplos sencillos</b><br>
+		Las variables en JavaScript se definen usando la palabra clave <font color="#2A52DB">var:</font><br>
+		<div style="border-style: groove; border-color: #CDD6CF;background-color: #6BD184;">
+		<font color="#A5841B">var</font> x; <font color="#757876">// define la variable x, aunque no tiene ningún valor asignado por defecto</font><br>
+		<font color="#A5841B">var</font> y = 2; <font color="#757876">// define la variable y y le asigna el valor 2 a ella</font>
+		</div></p>
+		<p>Sin embargo, la mayoria de los entornos de ejeciocion tiene un objeto llamado <font color="#A89A6D">console</font> que puede ser usado para imprimir por el flujo de salida de la consola de depuración. He aquí un simple programa que imprime "Hello world!":<br>
+		<div style="border-style: groove; border-color: #CDD6CF;background-color: #6BD184;">
+		console.log("Hello world!");
+		</div></p>
+		<p>Una funcion recursiva:<br>
+		<div style="border-style: groove; border-color: #CDD6CF;background-color: #6BD184;">
+		<font color="#A5841B">function</font> factorial(n) {<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">if</font> (n == 0) {<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> 1;<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> n * factorial(n - 1);<br>
+		}
+		</div></p>
+		<p>Ejemplos de funcion anonima (o funcion lambda) y una clausura:<br>
+		<div style="border-style: groove; border-color: #CDD6CF;background-color: #6BD184;">
+		<font color="#A5841B">var</font> displayClosure = <font color="#A5841B">function</font>() {<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">var</font> count = 0;<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return function</font> () {<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> ++count;<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+		}<br>
+		<font color="#A5841B">var</font> inc = displayClosure();<br>
+		inc(); <font color="#757876">// devuelve 1</font><br>
+		inc(); <font color="#757876">// devuelve 2</font><br>
+		inc(); <font color="#757876">// devuelve 3</font><br>
+	</div></p>
+	<p>Las expresiones con invocación automática permiten a las funciones pasarle variables por parámetro dentro de sus propias clausuras.<br>
+	<div style="border-style: groove; border-color: #CDD6CF;background-color: #6BD184;">
+	<font color="#A5841B">var</font> v;<br>
+	v = 1;<br>
+	<font color="#A5841B">var</font> getValue = (<font color="#A5841B">function</font>(v) {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return function</font>() {<font color="#A5841B">return</font> v;};<br>
+	}(v));<br><br>	
+	v = 2;<br><br>	
+	getValue(); <font color="#757876">// 1</font><br>
+	</div></p>
+	<p><b>Ejemplos mas avanzados</b><br>
+	El siguiente código muestra varias características de JavaScript.<br>
+	<div style="border-style: groove; border-color: #CDD6CF;background-color: #6BD184;">
+	<font color="#757876">/* Busca el mínimo común múltiplo (MCM) de dos números */</font><br>
+	<font color="#A5841B">function</font> LCMCalculator(x, y) { <font color="#757876">// función constructora</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">var</font> checkInt = <font color="#757876">function</font> (x) { <font color="#757876">// función interior</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#757876">if</font> (x % 1 !== 0) {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">throw</font> <font color="#2A41E7">new</font> <font color="#764B09">TypeError</font>(x + " no es un entero"); <font color="#757876">// lanza una excepción</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> x;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">this</font>.a = checkInt(x) <font color="#757876">// puntos y coma son opcionales</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">this</font>.b = checkInt(y);<br>
+	}<br>
+	<font color="#757876">// El prototipo de las instancias de objeto creados por el constructor es el de la propiedad “prototype” del constructor.</font><br>
+	LCMCalculator.prototype = { <font color="#757876">// objeto definido como literal</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">constructor:</font> LCMCalculator, <font color="#757876">// cuando reasignamos un prototipo, establecemos correctamente su propiedad constructor</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;gcd: <font color="#A5841B">function</font> () { <font color="#757876">// método que calcula el máximo común divisor<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Algoritmo de Euclides:</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">var</font> a = <font color="#CCAA3E">Math</font>.abs(<font color="#A5841B">this</font>.a), b = <font color="#CCAA3E">Math</font>.abs(<font color="#A5841B">this</font>.b), t;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">if</font> (a < b) {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#757876">// intercambiamos variables</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t = b;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b = a;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = t;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">while</font> (b !== 0) {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t = b;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b = a % b;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = t;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#757876">// Solo necesitamos calcular el MCD una vez, por lo tanto 'redefinimos' este método.<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// (Realmente no es una redefinición—está definida en la propia instancia, por lo tanto<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// this.gcd se refiere a esta 'redefinición' en vez de a LCMCalculator.prototype.gcd).<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Además, 'gcd' === "gcd", this['gcd'] === this.gcd</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">this</font>['gcd'] = <font color="#A5841B">function</font> () {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> a;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> a;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#757876">// Los nombres de las propiedades del objeto pueden ser especificados con cadenas delimitadas con comillas simples (') o dobles (“).</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;"lcm" : <font color="#A5841B">function</font> () {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#757876">// Los nombres de las variables no colisionan con las propiedades del objeto. Por ejemplo: |lcm| no es |this.lcm|.<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// No usar |this.a * this.b| para evitar problemas con cálculos en coma flotante.</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">var</font> lcm = <font color="#A5841B">this</font>.a / <font color="#A5841B">this</font>.gcd() * <font color="#A5841B">this</font>.b;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#757876">// Sólo necesitamos calcular MCM una vez, por lo tanto "redefinimos" este método.</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">this</font>.lcm = <font color="#A5841B">function</font> () {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> lcm;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> lcm;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;toString: <font color="#A5841B">function</font> () {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> "LCMCalculator: a = " + <font color="#A5841B">this</font>.a + ", b = " + <font color="#A5841B">this</font>.b;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+	};<br><br>
+	<font color="#757876">// Definimos una función genérica para imprimir un resultado; esta implementación solo funciona en los navegadores web</font><br>
+	<font color="#A5841B">function</font> output(x) {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#CCAA3E">document</font>.body.appendChild(<font color="#CCAA3E">document</font>.createTextNode(x));<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#CCAA3E">document</font>.body.appendChild(<font color="#CCAA3E">document</font>.createElement('br'));<br>
+	}<br><br>
+	<font color="#757876">// Nota: Los métodos.map() y.forEach() del prototipo Array están definidos en JavaScript 1.6.<br>
+	// Estos métodos son usados aquí para demostrar la naturaleza funcional inherente del lenguaje.</font><br>
+	[[25, 55], [21, 56], [22, 58], [28, 56]].map(function (pair) { // construcción literal de un Array + función de mapeo.<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> <font color="#2A41E7">new</font> LCMCalculator(pair[0], pair[1]);<br>
+	}).sort(<font color="#A5841B">function</font> (a, b) { <font color="#757876">// ordenamos la colección por medio de esta función</font><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<font color="#A5841B">return</font> a.lcm() - b.lcm();<br>
+	}).forEach(<font color="#A5841B">function</font> (obj) {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;output(obj + ", gcd = " + obj.gcd() + ", lcm = " + obj.lcm());<br>
+	});<br>
+	</div></p>
+	<p>El siguiente ejemplo muestra la salida que deberia ser mostrada en la ventana de un navegador.
+	<div style="border-style: groove; border-color: #CDD6CF;background-color: #6BD184;">
+	LCMCalculator: a = 28, b = 56, gcd = 28, lcm = 56<br>
+	LCMCalculator: a = 21, b = 56, gcd = 7, lcm = 168<br>
+	LCMCalculator: a = 25, b = 55, gcd = 5, lcm = 275<br>
+	LCMCalculator: a = 22, b = 58, gcd = 2, lcm = 638
+	</div></p>
+</body>
+</html>
